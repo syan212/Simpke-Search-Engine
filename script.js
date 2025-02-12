@@ -1,12 +1,11 @@
 function search() {
   let query = document.getElementById('searchQuery').value.toLowerCase();
   if (!query) {
-    alert('Please enter a search term');
+    alert('Please enter something');
     return;
   }
             
   let resultsDiv = document.getElementById('results');
-  resultsDiv.innerHTML = '<p>Searching...</p>';   
   fetch('Sites.txt')
   .then(response => response.text())
   .then(data => {
