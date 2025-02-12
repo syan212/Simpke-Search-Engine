@@ -1,20 +1,75 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>A Simple Search Engine</title>
-    <link rel="stylesheet" href="style.css">
-    <script>
-      function search(){
-         alert("Button Successful!!!!");
-      }
-    </script>
-  </head>
-  <body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Search Engine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .results {
+            margin-top: 20px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
     <div class="search-container">
         <h1>Simple Search Engine</h1>
         <input type="text" id="searchQuery" placeholder="Enter search query...">
         <button onclick="search()">Search</button>
         <div class="results" id="results"></div>
     </div>
-  </body>
+
+    <script>
+        function search() {
+            let query = document.getElementById('searchQuery').value.toLowerCase();
+            if (!query) {
+                alert('Please enter a search term');
+                return;
+            }
+            
+            let resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<p>Searching...</p>';
+            
+            fetch('Sites.txt')
+            .then(response => response.text())
+            .then(data => {
+                resultsDiv.innerHTML = '';
+                let sites = data.split('\n').map(line => line.trim()).filter(line => line);
+                let filteredSites = sites.filter(site => site.toLowerCase().includes(query));
+                
+                if (filteredSites.length > 0) {
+                    filteredSites.forEach(site => {
+                        let item = `<div><a href="${site}" target="_blank">${site}</a></div>`;
+                        resultsDiv.innerHTML += item;
+                    });
+                } else {
+                    resultsDiv.innerHTML = '<p>No results found.</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching results:', error);
+                resultsDiv.innerHTML = '<p>Error retrieving results. Try again later.</p>';
+            });
+        }
+    </script>
+</body>
 </html>
