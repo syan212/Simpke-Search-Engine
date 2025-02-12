@@ -10,14 +10,11 @@
     </script>
   </head>
   <body>
-    <form style="
-      margin-top: 20%;
-      margin-left: 40%;
-    ">
-      <h1>A simple Search Engine</h1>
-      <input type="text"id="search" placeholder="Type here to search" required>
-      <button onclick="search()">Search</button>
-    </form>
-    <a href="https://chatgpt.com/" id="ChatGPT" style="display:none">ChatGPT</a>
+    <div class="search-container">
+        <h1>Simple Search Engine</h1>
+        <input type="text" id="searchQuery" placeholder="Enter search query...">
+        <button onclick="search()">Search</button>
+        <div class="results" id="results"></div>
+    </div>
   </body>
 </html>
